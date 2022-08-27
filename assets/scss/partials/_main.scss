@@ -1,0 +1,93 @@
+@import './courseDataForm';
+@import './sidebar';
+
+body.homeBody {
+    display  : flex;
+    flex-wrap: wrap;
+    overflow : hidden;
+}
+
+#home {
+    position       : relative;
+    display        : flex;
+    height         : 100vh;
+    justify-content: center;
+    align-items    : center;
+    width          : 100vw;
+    @include transition();
+    overflow-x: hidden;
+
+    &.open {
+        width: 25vw !important;
+    }
+
+
+    #getCourseNumberForm {
+        padding  : 1rem;
+        width    : 100vw;
+        animation: openMe .5s ease-in-out;
+
+        .form-group {
+            gap        : .3rem;
+            align-items: flex-end;
+
+            span {
+                font-size: 1.5rem;
+            }
+
+            .form-control {
+                padding-left: 0;
+            }
+        }
+
+        @keyframes openMe {
+            0% {
+                transform: translateY(50%);
+                opacity  : 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity  : 1;
+            }
+        }
+
+    }
+
+
+    #courseDataForm {
+        @include courseFormData;
+    }
+
+    .sideToggler {
+        position     : absolute;
+        right        : 0;
+        color        : $accent;
+        background   : $primaryColor;
+        cursor       : pointer;
+        top          : .5rem;
+        font-size    : 1rem;
+        font-weight  : bold;
+        padding      : .2rem;
+        font-size    : 1.3rem;
+        border-radius: 25% 0 0 25%;
+
+        span {
+            display: block;
+            @include transition();
+
+            &.open {
+                transform: rotate(180deg);
+            }
+        }
+
+
+
+    }
+
+}
+
+#sidebar {
+    @include sidebar;
+
+}

@@ -1,0 +1,61 @@
+@import './infoContainer';
+@import './profile';
+
+@mixin sidebar {
+
+    position      : relative;
+    right         : 0;
+    height        : 100vh;
+    z-index       : 1;
+    width         : 70vw;
+    transition    : width .5s ease-in-out;
+    display       : flex;
+    flex-direction: column;
+    overflow      : hidden;
+
+    &.open {
+        width     : 75vw !important;
+        box-shadow: 0 0 4px 2px #00000022;
+    }
+
+    .head {
+        color          : $accent;
+        background     : $primaryColor;
+        height         : 50px;
+        display        : flex;
+        justify-content: flex-end;
+        padding        : .2rem;
+
+
+        .content {
+            display        : flex;
+            width          : 100%;
+            justify-content: flex-end;
+            align-items    : flex-end;
+            gap            : .5rem;
+            overflow       : hidden;
+
+            img {
+                width        : 40px;
+                height       : 40px;
+                border-radius: 50%;
+                overflow     : hidden;
+                cursor       : pointer;
+            }
+        }
+    }
+
+    .body {
+        height: calc(100% - 30px);
+
+        .info-container {
+            @include infoContainer();
+        }
+
+        .profile {
+            @include profile();
+        }
+
+    }
+
+}

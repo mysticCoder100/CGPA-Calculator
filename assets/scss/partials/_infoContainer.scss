@@ -1,0 +1,200 @@
+@mixin infoContainer {
+    width         : 100%;
+    height        : 100%;
+    display       : flex;
+    flex-direction: column;
+
+
+    &.open {
+        animation: animateInfoContainer 1s ease-in-out alternate;
+    }
+
+    @keyframes animateInfoContainer {
+        0% {
+            opacity  : 0;
+            transform: scale(0);
+        }
+
+        25% {
+            opacity: .25;
+        }
+
+        74% {
+            opacity: .75;
+        }
+
+        100% {
+            opacity  : 1;
+            transform: scale(1);
+        }
+    }
+
+
+    .info {
+        height        : 110px;
+        overflow      : hidden;
+        border-bottom : 1px solid $primaryColorAlternate;
+        display       : flex;
+        flex-direction: column;
+        padding-top   : .5rem;
+        border-radius : 0 0 0 40%;
+        color         : $accent;
+        gap           : .4rem;
+        background    : $primaryColorAlternate;
+
+
+        >div {
+            display    : flex;
+            gap        : .2rem;
+            padding    : 0 .3rem 0 0;
+            align-self : flex-end;
+            width      : 70%;
+            align-items: flex-end;
+
+            span {
+                border-bottom: 1px solid $accent;
+                cursor       : text;
+                font-weight  : bold;
+                width        : 100%;
+                font-size    : .8rem;
+            }
+        }
+
+
+        >div:first-of-type {
+            align-self     : flex-start;
+            justify-content: space-between;
+            padding        : 0;
+            padding        : .2rem;
+            width          : 50%;
+            background     : $primaryColor;
+
+            span {
+                border   : none;
+                font-size: inherit;
+            }
+        }
+    }
+
+
+
+    .records {
+        height  : calc(100% - 110px);
+        width   : 100%;
+        position: relative;
+
+
+
+        .default-record {
+            height        : 100%;
+            width         : 100%;
+            text-align    : center;
+            padding       : .5rem 0 1rem 0;
+            overflow-x    : hidden;
+            overflow-y    : auto;
+            display       : flex;
+            flex-direction: column;
+            gap           : .5rem;
+
+            .record-not-found {
+                height     : calc(100% - 30px);
+                display    : grid;
+                place-items: center;
+
+                span {
+                    color: $error;
+                }
+
+                h3 {
+                    animation: noRecord 1s infinite alternate;
+
+                    @keyframes noRecord {
+                        0% {
+                            opacity  : 0;
+                            transform: scale(.8);
+                        }
+
+                        25% {
+                            opacity: .25;
+                        }
+
+                        50% {
+                            opacity: 5;
+                        }
+
+                        75% {
+                            opacity: .75;
+                        }
+
+                        100% {
+                            opacity  : 1;
+                            transform: scale(1);
+                        }
+                    }
+                }
+
+            }
+
+            .record-level {
+                /* background      : $primaryColor; */
+                width              : 100%;
+                // color           : $accent;
+                padding            : 1rem;
+                border             : none;
+                border-bottom      : 1px solid $primaryColor;
+                cursor             : pointer;
+                @include transition();
+
+                &:hover {
+                    font-weight: bolder;
+                }
+            }
+
+        }
+
+        .level-detail {
+            position   : absolute;
+            width      : 100%;
+            height     : 100%;
+            top        : 0;
+            left       : 0;
+            z-index    : 1;
+            display    : grid;
+            place-items: center;
+            background : $accent;
+            animation  : openMe .5s ease-in-out;
+            background : $accent;
+            padding    : 1rem;
+
+            @keyframes openMe {
+                0% {
+                    opacity: 0;
+                }
+
+                25% {
+                    opacity: .25;
+                }
+
+                50% {
+                    opacity: .50;
+                }
+
+                75% {
+                    opacity: .75;
+                }
+
+                100% {
+                    opacity: 1;
+                }
+
+            }
+
+            #closeLevelDetails {
+                cursor: pointer;
+            }
+        }
+
+    }
+
+
+}
