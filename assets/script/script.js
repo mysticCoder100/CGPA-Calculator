@@ -1,7 +1,6 @@
 import Index from './modules/index.obj.js';
 import GeneralTemplate from './modules/general_obj.js';
 import Home from './modules/home.obj.js';
-
 const generalTemplate = new GeneralTemplate();
 const index = new Index();
 
@@ -12,23 +11,30 @@ let route = path[path.length - 1]
 
 
 $(window).on('load', function () {
+    start()
+})
+$(window).on('hashchange', function (e) {
+    window.location.reload();
+})
+
+function start () {
     let xml = generalTemplate.ajax({ inSession: true });
     xml.done((response, status, jqxhr) => {
         if (response.session == false &&
-            route != 'forget-password' &&
+            route != '#forget-password' &&
             route != '' &&
-            route != 'register') {
+            route != '#register') {
             window.location = '/';
             return;
         } else if (
             response.session == true &&
-            (route == 'forget-password' ||
+            (route == '#forget-password' ||
                 route == '' ||
-                route == 'register')
+                route == '#register')
         ) {
-            window.location = 'home';
+            window.location = '/#home';
             return;
-        } else if (route == 'logout') {
+        } else if (route == '#logout') {
             let xml = generalTemplate.ajax({ inSession: true, logout: true })
             xml.done((response, status, jqxhr) => {
                 if (response.session == true) {
@@ -40,7 +46,7 @@ $(window).on('load', function () {
         }
         startRoute()
     })
-})
+}
 
 function startRoute () {
     if (path.length > 4) {
@@ -53,10 +59,10 @@ function startRoute () {
         case '':
             index.setLoginForm();
             break;
-        case 'register':
+        case '#register':
             index.setRegisterForm();
             break;
-        case 'home':
+        case '#home':
             if (!link[1]) {
                 new Home();
             } else {
@@ -68,7 +74,7 @@ function startRoute () {
                 if (paramsObject.length > 1 ||
                     paramsObject[0][0] != 'number'
                 ) {
-                    window.location.href = '/home'
+                    window.location.href = '/#home'
                 } else {
                     let data = paramsObject[0][1];
                     let unit = data.split('$')
@@ -80,7 +86,7 @@ function startRoute () {
             }
 
             break;
-        case 'forget-password':
+        case '#forget-password':
             index.setForgetPasswordForm();
             break;
         default:

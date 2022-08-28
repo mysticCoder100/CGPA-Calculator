@@ -25,8 +25,8 @@ class Index extends GeneralTemplate {
 
                     <div class="formButton">
                         <button class="btn" type="submit">Login <i class="fas fa-sign-in-alt"></i> </button>
-                        <a href="/forget-password"  id="forgetPassword">Forget Password?</a>
-                        <a href="/register" id="indexRegisterLink">Register?</a>
+                        <a href="/#forget-password"  id="forgetPassword">Forget Password?</a>
+                        <a href="/#register" id="indexRegisterLink">Register?</a>
                     </div> 
 
             </form>
@@ -131,7 +131,7 @@ class Index extends GeneralTemplate {
             let xml = super.formAjax(data);
             xml.done((response, status, jqxhr) => {
                 if (response.message == 'login' && response.status == 'success') {
-                    window.location = 'home';
+                    window.location = '/#home';
                 }
             })
         })

@@ -45,7 +45,7 @@ class Home extends GeneralTemplate {
                         <h3>Email</h3>
 
                     </div>
-                    <a class="logout" href="/logout">Logout <i class="fas fa-sign-out-alt" ></i> </a>
+                    <a class="logout" href="/#logout">Logout <i class="fas fa-sign-out-alt" ></i> </a>
                 </form>
 
             </div>
@@ -280,7 +280,7 @@ class Home extends GeneralTemplate {
 
     setUrl (number) {
         let hash = md5(number)
-        window.history.replaceState(null, null, `home?number=${hash.length}$${number}$${hash}`)
+        window.history.replaceState(null, null, `#home?number=${hash.length}$${number}$${hash}`)
     }
 
     setCourseDataForm (number) {
