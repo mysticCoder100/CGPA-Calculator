@@ -69,19 +69,19 @@ class Home extends GeneralTemplate {
                 <div class="info">
                     <div>
                         <label>GPA/CGPA:</label>
-                        <span>4.67</span>
+                        <span>0.00</span>
                     </div>
                     <div>
                         <label>School:</label>
-                        <span>FUTA</span>
+                        <span>My School</span>
                     </div>
                     <div>
                         <label>Department:</label>
-                        <span>SEN</span>
+                        <span>My Department</span>
                     </div>
                     <div>
                         <label>Level:</label>
-                        <span>400</span>
+                        <span>My Level</span>
                     </div>
                 </div>
                 <div class="records">
@@ -180,6 +180,7 @@ class Home extends GeneralTemplate {
         // testing
 
         // $('#sidebar .body').empty();
+
         // this.setProfile();
         // this.sideToggling();
 
@@ -201,10 +202,13 @@ class Home extends GeneralTemplate {
     }
 
     sideToggling () {
-        $('.sideToggler span').toggleClass('open')
-        $('#home').toggleClass('open')
-        $('#sidebar').toggleClass('open')
-        $('#sidebar .info-container').toggleClass('open')
+        var m = window.matchMedia('(min-width: 700px)')
+        if (!m.matches) {
+            $('.sideToggler span').toggleClass('open')
+            $('#home').toggleClass('open')
+            $('#sidebar').toggleClass('open')
+            $('#sidebar .info-container').toggleClass('open')
+        }
     }
 
     setCourseNumber () {
@@ -219,9 +223,6 @@ class Home extends GeneralTemplate {
                 $('.response').remove();
                 super.response('Field Empty !!!', 'error').insertBefore($('#getCourseNumberForm .form-group'))
                 super.closeResponse();
-                setTimeout(() => {
-                    $('#getCourseNumberForm .response').remove()
-                }, 5000)
                 return;
             }
             $('.response').remove();
@@ -278,9 +279,60 @@ class Home extends GeneralTemplate {
         `)
     }
 
+    calculated (data) {
+        let calculatedResult = $(`
+            <div class="calculated">
+                <div class="head">
+                    <span id="close" data-target="calculated"><i class="fas fa-arrow-left"></i></span>
+                    <div>
+                        <h3>Calculation Summary</h3>
+                        <span>TCP: ${data.tcp}</span>
+                        <span>TlU: ${data.tlu}</span>
+                        <span>GPA: ${data.gpa}</span>
+                    </div>
+                </div>
+                <table class="preview">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Unit</th>
+                            <th>Course Score</th>
+                            <th>Course Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        `)
+
+
+        $('#sidebar .body').empty();
+        $('#sidebar .body').append(calculatedResult)
+        $.each(data, (i, el) => {
+            if (typeof el != 'object') {
+                return;
+            };
+            $('.preview tbody').append($(`
+                <tr>
+                    <td>${i}</td>
+                    <td>${el.unit}</td>
+                    <td>${el.score}</td>
+                    <td>${el.grade}</td>
+                </tr>
+            `))
+        })
+
+        $('#close').on('click', () => {
+            $('#sidebar .body').empty();
+            $(this.setSideBody());
+        })
+    }
+
     setUrl (number) {
         let hash = md5(number)
-        window.history.replaceState(null, null, `#home?number=${hash.length}$${number}$${hash}`)
+        window.history.replaceState(null, null, `/#home?number=${hash.length}$${number}$${hash}`)
     }
 
     setCourseDataForm (number) {
@@ -308,17 +360,28 @@ class Home extends GeneralTemplate {
 
             let xml = super.formAjax(data);
             xml.done((response, status, jqxhr) => {
+                setBack();
 
                 if (response.status == 'error') {
                     let output = super.response(response.message, 'error')
                     me.children('.body').prepend(output);
                     super.closeResponse();
-                    setBack();
+                } else if (response.status == 'result') {
+                    this.setUrl()
+                    $('#courseDataForm input').val('');
+                    $('.courseDataContainer').each(function (i, el) {
+                        if (i == 0) return;
+                        el.remove();
+                    })
+                    this.setUrl($('.courseDataContainer').length)
+                    this.calculated(
+                        response.message
+                    );
+                    this.sideToggling()
                 } else {
                     let output = super.response(response.message, 'success')
                     me.children('.body').prepend(output);
                     super.closeResponse();
-                    setBack();
                 }
             })
             xml.fail((jqxhr, status, response) => {

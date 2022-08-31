@@ -8,6 +8,14 @@
     justify-content: center;
     gap            : 2rem;
 
+    @include responsiveMedia('m') {
+        width: 50vw;
+    }
+
+    @include responsiveMedia('l') {
+        width: 30vw;
+    }
+
     animation: animateFormLogin .5s ease-in-out backwards;
 
     @keyframes animateFormLogin {
@@ -101,6 +109,15 @@
     display       : flex;
     flex-direction: column;
     gap           : 2rem;
+
+    @include responsiveMedia('m') {
+        width: 50vw;
+    }
+
+    @include responsiveMedia('l') {
+        width: 30vw;
+    }
+
 
     animation: animateFormLogin .5s ease-in-out backwards;
 

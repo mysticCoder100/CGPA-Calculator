@@ -62,6 +62,8 @@
             color          : $error;
             text-decoration: none;
             cursor         : pointer;
+            border         : none;
+            outline        : none;
 
             &:hover {
                 color: lighten($color: $error, $amount: 10%);

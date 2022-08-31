@@ -11,6 +11,15 @@
     gap            : 2rem;
     animation      : animateFormRegister .5s ease-in-out backwards;
 
+    @include responsiveMedia('m') {
+        width: 50vw;
+    }
+
+    @include responsiveMedia('l') {
+        width: 30vw;
+    }
+
+
     @keyframes animateFormRegister {
         0% {
             transform: translateY(30%);

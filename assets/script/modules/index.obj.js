@@ -67,29 +67,29 @@ class Index extends GeneralTemplate {
 
             <div class="form-group">
                 <span><i class="far fa-user"></i></span>
-                <input class="form-control" type="text" placeholder="First Name" name="" value="" />
+                <input class="form-control" type="text" placeholder="First Name" name="fname" value="" />
             </div>
             <div class="form-group">
                 <span><i class="far fa-user"></i></span>
-                <input class="form-control" type="text" placeholder="Last Name" name="" value="" />
+                <input class="form-control" type="text" placeholder="Last Name" name="lname" value="" />
             </div>
             <div class="form-group">
                 <span><i class="fas fa-envelope"></i></span>
-                <input class="form-control" type="email" placeholder="Email" name="" value="" />
+                <input class="form-control" type="email" placeholder="Email" name="email" value="" />
             </div>
             <div class="form-group">
                 <span><i class="fas fa-user"></i></span>
-                <input class="form-control" type="text" placeholder="Username" name="" value="" />
+                <input class="form-control" type="text" placeholder="Username" name="uname" value="" />
             </div>
 
             <div class="form-group">
                 <span><i class="fas fa-lock"></i></span>
-                <input class="form-control" type="password" placeholder="Password" name="" value="" />
+                <input class="form-control" type="password" placeholder="Password" name="pword" value="" />
                 <span class="open-password"><i class="fa fa-eye"></i></span>
             </div>
             <div class="form-group">
                 <span><i class="fas fa-lock"></i></span>
-                <input class="form-control" type="password" placeholder="Comfirm Password" name="" value="" />
+                <input class="form-control" type="password" placeholder="Comfirm Password" name="cpword" value="" />
                 <span class="open-password"><i class="fa fa-eye"></i></span>
             </div>
             <div class="formButton">
@@ -116,6 +116,28 @@ class Index extends GeneralTemplate {
         this.openPassword();
         $('#registerForm').on('submit', (e) => {
             e.preventDefault();
+            let me = $('#registerForm');
+            let data = new FormData(me[0]);
+            data.append('register', true)
+            let xml = super.formAjax(data);
+            me.children('.response').remove();
+            xml.done((response, status, jqxhr) => {
+                if (response.status == 'success') {
+                    let output = super.response(response.message, 'success');
+                    $(output).insertAfter(`#${me[0].id} h4`);
+                    if (response.registered) {
+                        me.remove();
+                        window.history.replaceState(null, null, `/`)
+                        this.setLoginForm();
+                        let output = super.response('Thank You For Registering', 'success');
+                        $(output).insertAfter(`#loginForm h4`);
+                    }
+                } else {
+                    let output = super.response(response.message, 'error');
+                    $(output).insertAfter(`#${me[0].id} h4`);
+                }
+                super.closeResponse();
+            });
         })
     }
 
@@ -129,10 +151,17 @@ class Index extends GeneralTemplate {
             let data = new FormData(me[0]);
             data.append('login', true)
             let xml = super.formAjax(data);
+            me.children('.response').remove();
             xml.done((response, status, jqxhr) => {
-                if (response.message == 'login' && response.status == 'success') {
+                if (response.status == 'success') {
+                    let output = super.response(response.message, 'success');
+                    $(output).insertAfter(`#${me[0].id} h4`);
                     window.location = '/#home';
+                } else {
+                    let output = super.response(response.message, 'error');
+                    $(output).insertAfter(`#${me[0].id} h4`);
                 }
+                super.closeResponse();
             })
         })
     }
@@ -140,12 +169,10 @@ class Index extends GeneralTemplate {
     openPassword () {
         $('.open-password').on('click', function () {
             if ($(this).children().hasClass('fa-eye')) {
-                $(this).children().removeClass('fa-eye')
-                $(this).children().addClass('fa-eye-slash')
+                $(this).children().removeClass('fa-eye').addClass('fa-eye-slash')
                 $(this).prev().prop({ type: 'text' })
             } else {
-                $(this).children().removeClass('fa-eye-slash')
-                $(this).children().addClass('fa-eye')
+                $(this).children().removeClass('fa-eye-slash').addClass('fa-eye')
                 $(this).prev().prop({ type: 'password' })
             }
         })

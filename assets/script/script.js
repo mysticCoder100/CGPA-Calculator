@@ -57,12 +57,15 @@ function startRoute () {
 
     switch (route) {
         case '':
+            document.title = "GPA Calculator | The Progressive one Login Page";
             index.setLoginForm();
             break;
         case '#register':
+            document.title = "GPA Calculator | The Progressive one Register Page";
             index.setRegisterForm();
             break;
         case '#home':
+            document.title = "GPA Calculator | The Progressive one Home Page";
             if (!link[1]) {
                 new Home();
             } else {
@@ -87,6 +90,7 @@ function startRoute () {
 
             break;
         case '#forget-password':
+            document.title = "GPA Calculator | The Progressive one Home Page";
             index.setForgetPasswordForm();
             break;
         default:

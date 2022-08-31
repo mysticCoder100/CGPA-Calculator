@@ -2,9 +2,12 @@
 @import './sidebar';
 
 body.homeBody {
-    display  : flex;
-    flex-wrap: wrap;
-    overflow : hidden;
+    display        : flex;
+    flex-wrap      : wrap;
+    overflow       : hidden;
+    justify-content: center;
+    align-items    : center;
+
 }
 
 #home {
@@ -13,9 +16,22 @@ body.homeBody {
     height         : 100vh;
     justify-content: center;
     align-items    : center;
+    border-right   : none;
     width          : 100vw;
     @include transition();
     overflow-x: hidden;
+
+    @include responsiveMedia('m') {
+        width     : 60%;
+        box-shadow: 0 0 4px 2px #00000022 inset;
+    }
+
+    @include responsiveMedia('l') {
+        height: 70%;
+        height: 90%;
+    }
+
+
 
     &.open {
         width: 25vw !important;
@@ -26,6 +42,11 @@ body.homeBody {
         padding  : 1rem;
         width    : 100vw;
         animation: openMe .5s ease-in-out;
+
+        @include responsiveMedia('m') {
+            width: 350px;
+        }
+
 
         .form-group {
             gap        : .3rem;
@@ -71,6 +92,11 @@ body.homeBody {
         padding      : .2rem;
         font-size    : 1.3rem;
         border-radius: 25% 0 0 25%;
+
+        @include responsiveMedia('m') {
+            display: none;
+        }
+
 
         span {
             display: block;

@@ -13,6 +13,17 @@
     flex-direction: column;
     overflow      : hidden;
 
+    @include responsiveMedia('m') {
+        width     : 40%;
+        box-shadow: 0 0 4px 2px #00000022;
+    }
+
+    @include responsiveMedia('l') {
+        height: 90%;
+        width : 30%;
+    }
+
+
     &.open {
         width     : 75vw !important;
         box-shadow: 0 0 4px 2px #00000022;
@@ -55,6 +66,55 @@
         .profile {
             @include profile();
         }
+
+    }
+
+
+    .calculated {
+        height        : 100%;
+        width         : 100%;
+        display       : flex;
+        flex-direction: column;
+        font-size     : .8rem;
+        gap           : .5rem;
+
+        .head {
+            padding        : 0 .4rem;
+            height         : 30px;
+            display        : flex;
+            background     : $primaryColorAlternate;
+            gap            : .5rem;
+            align-items    : center;
+            justify-content: space-between;
+
+            #close {
+                cursor: pointer;
+            }
+
+            div {
+                display    : flex;
+                gap        : 2rem;
+                align-items: center;
+                font-weight: bold;
+                font-size  : .75rem;
+            }
+        }
+
+        table {
+            width          : 100%;
+            border         : 1px solid $primaryColor;
+            border-collapse: collapse;
+            max-height     : calc(100% - 30px - .5rem);
+            overflow       : auto;
+            overflow-x     : hidden;
+        }
+
+        td,
+        th {
+            border : 1px solid $primaryColor;
+            padding: .3rem;
+        }
+
 
     }
 

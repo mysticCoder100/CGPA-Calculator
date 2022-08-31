@@ -21,7 +21,8 @@ class CgpaCalculator
                 $units[$item['unit']] = 1;
             }
             $courseGrades[$item['code']] = [
-                'score' => $this->getGrade($item['score'])['grade'],
+                'score' => $this->getGrade($item['score'])['score'],
+                'grade' => $this->getGrade($item['score'])['grade'],
                 'point' => $this->getGrade($item['score'])['point'],
                 'unit' => $item['unit']
             ];
@@ -29,16 +30,16 @@ class CgpaCalculator
 
         $courseGrades['tlu'] = $this->getTlu($units);
         $courseGrades['tcp'] = $this->getTcp($courseGrades);
-        $courseGrades['gpa'] = $this->calculateGpa(
+        $courseGrades['gpa'] = sprintf('%0.2f', $this->calculateGpa(
             $courseGrades['tlu'],
             $courseGrades['tcp']
-        );
+        ));
         return $courseGrades;
     }
 
     private function calculateGpa($tlu, $tcp)
     {
-        return $tcp / $tlu;
+        return (float) $tcp / $tlu;
     }
 
     private function getTcp($data)
@@ -64,15 +65,15 @@ class CgpaCalculator
     private function getGrade($score)
     {
         if ($score <= 100 && $score >= 70) {
-            $grade = ['grade' => 'A', 'point' => 5.0];
+            $grade = ['score' => $score, 'grade' => 'A', 'point' => 5.0];
         } else if ($score >= 60) {
-            $grade = ['grade' => 'B', 'point' => 4.0];
+            $grade = ['score' => $score, 'grade' => 'B', 'point' => 4.0];
         } else if ($score >= 50) {
-            $grade = ['grade' => 'B', 'point' => 3.0];
+            $grade = ['score' => $score, 'grade' => 'B', 'point' => 3.0];
         } else if ($score >= 45) {
-            $grade = ['grade' => 'D', 'point' => 2.0];
+            $grade = ['score' => $score, 'grade' => 'D', 'point' => 2.0];
         } else {
-            $grade = ['grade' => 'F', 'point' => 0.0];
+            $grade = ['score' => $score, 'grade' => 'F', 'point' => 0.0];
         }
         return $grade;
     }
