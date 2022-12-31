@@ -1,8 +1,5 @@
 <?php
-require_once 'function.php';
-require_once  __DIR__ . '/./cgpaCalculator.php';
-require_once __DIR__ . './db.php';
-require_once __DIR__ . './user.php';
+require_once  __DIR__ . '/./autoload.php';
 $db = new Database();
 session_start();
 
@@ -167,6 +164,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'status' => 'error'
                 ]);
             }
+        }
+    } else if (isset($_POST["forgetPassword"])) {
+        array_pop($_POST);
+        $data = array_map('sanitizeString', $_POST);
+        if (empty($data["email"])) {
+            echo json_encode([
+                'message' => 'Email Field is Empty',
+                'status' => 'error'
+            ]);
+        } else {
+            $userExists = (new User($data))->checkIfExists('email', $data['email']);
+            if ($userExists > 0) {
+                $user = new User($data);
+                $user->deleteFromForgetPassword();
+                $user->insertIntoForgetPassword();
+                $forgetPasswordData = $user->selectFromForgetPassword();
+                $redierct = $_SERVER['HTTP_REFERER'] . 'reset_password.php?email=' . $forgetPasswordData['email'] . '&href=' . $forgetPasswordData['forget_link'];
+                $data['redirect'] = $redierct;
+                $sendEmail = (new Email($data))->sendForgotPassword();
+                if ($sendEmail == true) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'An Email Would be sent to you, if you have an account with ' . $data['email']
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'An Error Occured'
+                    ]);
+                }
+                return;
+            }
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'An Email Would be sent to you, if you have an account with ' . $data['email']
+            ]);
+        }
+    } else if (isset($_POST['resetPassword'])) {
+        array_pop($_POST);
+        $data = array_map('sanitizeString', $_POST);
+        $empty = array_map(
+            fn ($el) => 'field is required',
+            array_filter($data, fn ($el) => empty($el))
+        );
+        if (count($empty)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Kindly Input Both Fields',
+                'field' => $empty
+            ]);
+        } else if (strlen($data['password']) !== 8) {
+            echo json_encode([
+                'message' => 'Password must be eight(8) character long',
+                'status' => 'error'
+            ]);
+        } else if ($data['password'] !== $data['cpword']) {
+            echo json_encode([
+                'message' => 'Password Mismatch',
+                'status' => 'error'
+            ]);
+        } else {
+            $user = new User($data);
+            $updatePassword = $user->updatePassword();
+            if ($updatePassword) {
+                (new User($data))->deleteFromForgetPassword();
+                echo json_encode([
+                    'message' => 'Password Sucessfully Updated',
+                    'status' => 'success'
+                ]);
+                return;
+            }
+            echo json_encode([
+                'message' => 'An error occured',
+                'status' => 'error'
+            ]);
         }
     }
 }

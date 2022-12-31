@@ -46,4 +46,48 @@ class User
         }
         return $data;
     }
+    public function deleteFromForgetPassword()
+    {
+        $query = "DELETE FROM forget_password WHERE email = :email";
+        $data = [
+            'email' => $this->attributes['email']
+        ];
+        return $GLOBALS['db']->insert($query, $data);
+    }
+    public function insertIntoForgetPassword()
+    {
+        $query = "INSERT INTO forget_password(email) VALUES(:email)";
+        $data = [
+            'email' => $this->attributes['email']
+        ];
+        return $GLOBALS['db']->insert($query, $data);
+    }
+    public function selectFromForgetPassword()
+    {
+        $query = "SELECT *, NOW() now FROM forget_password WHERE email = :email";
+        $data = [
+            'email' => $this->attributes['email']
+        ];
+        return $GLOBALS['db']->fetchOne($query, $data);
+    }
+
+    public function checkIfInForgetPassword()
+    {
+        $query = "SELECT COUNT(*) FROM forget_password WHERE email = :email";
+        $data = [
+            'email' => $this->attributes['email']
+        ];
+        $count = $GLOBALS['db']->countItem($query, $data);
+        return $count;
+    }
+
+    public function updatePassword()
+    {
+        $query = "UPDATE users SET password = :password WHERE email = :email";
+        $data = [
+            'email' => $this->attributes['email'],
+            'password' => $this->attributes['password'],
+        ];
+        return $GLOBALS['db']->insert($query, $data);
+    }
 }

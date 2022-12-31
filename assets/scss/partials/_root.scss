@@ -14,10 +14,8 @@
     transition: all .5s ease-in-out;
 }
 
-$responsiveSize: ('m': 700px,
-    'l': 900px,
-    'xl': 1440px,
-);
+$responsiveSize: ('m': 700px, 'l': 900px,
+    'xl': 1440px);
 
 @mixin responsiveMedia($width) {
     @media screen and (min-width: map-get($responsiveSize, $width)) {

@@ -47,7 +47,7 @@ class Index extends GeneralTemplate {
 
                 <div class="form-group">
                     <span><i class="fas fa-envelope"></i></span>
-                    <input class="form-control"type="email" placeholder="Email" name="" value="">
+                    <input class="form-control"type="email" placeholder="Email" name="email" value="">
                 </div>
 
                 <div class="formButton">
@@ -107,6 +107,32 @@ class Index extends GeneralTemplate {
         $('#index').append(this.forgetPasswordForm());
         $('#forgetPasswordForm').on('submit', (e) => {
             e.preventDefault();
+            let myText = $(e.target).find('button[type="submit"]').html()
+            $(e.target).find('button[type="submit"]')
+                .attr('disabled', true)
+                .text(`Loading ... `)
+            let data = new FormData(e.target);
+            data.append('forgetPassword', true);
+            $.ajaxSetup({
+                cache: false,
+                contentType: false,
+                processData: false,
+            });
+            $(e.target).find('.response').remove();
+            $.post('src/request.php', data, null, "json")
+                .done((res) => {
+                    $(e.target).find('button[type="submit"]')
+                        .attr('disabled', false)
+                        .html(myText)
+                    if (res.status == 'error') {
+                        let response = super.response(res.message, 'error')
+                        response.insertAfter($(e.target).find('h4'))
+                    } else {
+                        let response = super.response(res.message, 'success')
+                        response.insertAfter($(e.target).find('h4'))
+                    }
+                    super.closeResponse();
+                })
         })
     }
 
