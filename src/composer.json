@@ -1,5 +1,13 @@
 {
+    "name": "abdulazeem/cgpa_calc",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Abdul-Azeez Abdul-Azeem",
+            "email": "sijuadeabdulazeem@gmail.com"
+        }
+    ],
     "require": {
-        "swiftmailer/swiftmailer": "^6.3"
+        "rakit/validation": "^1.4"
     }
 }

@@ -1,0 +1,46 @@
+* {
+    margin         : 0;
+    padding        : 0;
+    box-sizing     : border-box;
+    text-decoration: none !important;
+    scrollbar-width: thin;
+    outline        : none;
+    box-shadow     : none !important;
+}
+
+::-webkit-scrollbar {
+    width     : .3rem;
+    height    : .3rem;
+    background: $accent;
+}
+
+*::selection {
+    color     : #000000;
+    background: $secondaryColor;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: $radius;
+    background   : $primaryColor;
+    height       : 20%;
+}
+
+body {
+    overflow-x: hidden;
+    height    : 100vh;
+    width     : 100vw;
+    background: $background;
+}
+
+$widths: (s: 480px,
+    m: 768px,
+    l: 900px,
+    xl: 1024px,
+);
+
+
+@mixin responsiveMedia($width) {
+    @media screen and (min-width: map-get($widths, $width)) {
+        @content;
+    }
+}

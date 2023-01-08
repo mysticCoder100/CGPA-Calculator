@@ -1,0 +1,209 @@
+@import './dashboard';
+@import './settings';
+
+@mixin main {
+    padding       : 0 !important;
+    width         : 100%;
+    height        : 100%;
+    overflow      : hidden;
+    display       : flex;
+    flex-direction: column;
+    @extend %elementTransition;
+
+
+    header {
+        background     : $accent;
+        display        : flex;
+        justify-content: space-between;
+        align-items    : center;
+        padding        : 1rem;
+        color          : $primaryColor;
+        position       : relative;
+        @extend %shadow;
+
+        .right {
+            display    : flex;
+            align-items: center;
+            gap        : 1rem;
+
+            h5 {
+                margin: 0 !important;
+            }
+
+            span {
+                cursor: pointer;
+
+                @include responsiveMedia(m) {
+                    display: none;
+                }
+            }
+        }
+
+        .dropdown {
+            @extend %link;
+            position  : absolute;
+            right     : 1rem;
+            padding   : 0;
+            background: $accent;
+            @extend %miniShadow;
+            transform    : translateY(100%);
+            opacity      : 0;
+            visibility   : hidden;
+            gap          : 0;
+            z-index      : 10;
+            border-radius: $radius;
+            overflow     : hidden;
+            @extend %elementTransition;
+            min-width: 12rem;
+            color    : $primaryColor;
+
+            &.open {
+                opacity   : 1;
+                transform : translateY(70%);
+                visibility: visible;
+            }
+
+            li {
+                border-bottom: .1rem solid $primaryColor;
+                width        : 100%;
+                @extend %elementTransition;
+
+                &:last-of-type {
+                    border-bottom: none;
+                }
+
+
+                &:first-of-type:hover {
+                    cursor    : default !important;
+                    background: none !important;
+
+                    button {
+                        color: none !important;
+                    }
+                }
+
+                &:hover {
+                    cursor    : pointer;
+                    background: $primaryColor;
+
+                    button {
+                        color: $accent !important;
+                    }
+                }
+
+                .litle-info {
+                    width  : 100%;
+                    padding: .5rem;
+                    display: flex;
+                    gap    : .5rem;
+
+                    img {
+                        width        : 5rem;
+                        border-radius: $radius;
+                    }
+
+                    .info {
+                        width         : 100%;
+                        display       : flex;
+                        flex-direction: column;
+                        gap           : .3rem;
+
+                        h5,
+                        h6 {
+                            margin: 0;
+                        }
+
+                        .btn {
+                            width    : max-content;
+                            font-size: .7rem;
+                        }
+                    }
+                }
+
+                .link {
+                    padding    : .5rem;
+                    background : none;
+                    border     : none;
+                    display    : flex;
+                    align-items: center;
+                    gap        : 1rem;
+                    font-size  : 1.3rem;
+                    color      : $secondaryColor;
+                    @extend %elementTransition;
+                    width: 100% !important;
+                }
+            }
+        }
+
+        .user {
+            cursor     : pointer;
+            display    : flex;
+            align-items: center;
+            gap        : .2rem;
+
+            span {
+                @extend %elementTransition;
+            }
+
+            &.open {
+                span {
+                    transform: rotateX(180deg);
+                }
+            }
+
+            img {
+                width        : 2rem;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    #main {
+        height  : 100%;
+        width   : 100%;
+        overflow: hidden;
+        padding : 1rem;
+        position: relative;
+
+        &.open {
+            overflow-y: auto;
+        }
+
+        .overlay {
+            position   : absolute;
+            width      : 100%;
+            height     : 100%;
+            top        : 0;
+            left       : 0;
+            background : #00000555;
+            display    : grid;
+            place-items: center;
+            z-index    : 100;
+
+            img {
+                width: 4rem;
+            }
+
+            &.close {
+                display  : none;
+                transform: scale(0);
+                opacity  : 0;
+            }
+
+        }
+
+        >section {
+            width : 100%;
+            height: 100%;
+        }
+
+        #dashboard {
+            @include dashboard;
+        }
+
+        #settings {
+            @include settings;
+        }
+    }
+
+}

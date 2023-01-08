@@ -1,0 +1,115 @@
+@import './partials/autoload';
+
+#login {
+    display    : grid;
+    height     : 100%;
+    place-items: center;
+    width      : 100%;
+
+    form {
+        width         : 100%;
+        max-width     : 25rem;
+        display       : flex;
+        flex-direction: column;
+        gap           : 2rem;
+        align-items   : center;
+        padding       : 1rem 0;
+
+        img {
+            width : 10rem;
+            height: 10rem;
+        }
+
+        .fields {
+            width         : 100%;
+            display       : flex;
+            flex-direction: column;
+            gap           : 1.5rem;
+
+
+            .input-container {
+
+                p {
+                    margin: 0 !important;
+                }
+
+                .response {
+                    &__error {
+                        color: $error;
+                    }
+
+                    &__success {
+                        color: $success;
+                    }
+                }
+
+                .input-field {
+                    border       : 1px solid $primaryColor;
+                    border-radius: $radius;
+                    overflow     : hidden;
+                    display      : flex;
+                    align-items  : center;
+                    background   : #fff;
+
+                    &.error {
+                        border: 1px solid $error;
+
+                        input {
+                            &::placeholder {
+                                color: $error;
+                            }
+                        }
+                    }
+
+                    span {
+                        color: $primaryColor;
+                        @extend %formFontSize;
+                        cursor: pointer;
+                        @extend %elementTransition;
+
+                        &:hover {
+                            color: darken($color: $primaryColor, $amount: 10%);
+                        }
+                    }
+
+                    input {
+                        border: none;
+                        @extend %formFontSize;
+                        color: $primaryColor;
+                    }
+                }
+            }
+
+            .tail {
+                display       : flex;
+                flex-direction: column;
+                gap           : .3rem;
+
+                .short-links {
+                    display        : flex;
+                    justify-content: space-between;
+
+                    a {
+                        font-size: .7rem;
+                        color    : $linkColor;
+                        @extend %elementTransition;
+
+                        &:hover {
+                            color: lighten($color: $linkColor, $amount: 20%);
+                        }
+                    }
+                }
+
+                button {
+                    background: $primaryColor;
+                    @extend %elementTransition;
+                    @extend %formFontSize;
+
+                    &:hover {
+                        background: darken($color: $primaryColor, $amount: 10%);
+                    }
+                }
+            }
+        }
+    }
+}

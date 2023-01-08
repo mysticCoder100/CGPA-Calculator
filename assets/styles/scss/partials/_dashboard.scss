@@ -1,0 +1,202 @@
+@mixin dashCard($color) {
+    h4 {
+        color: $color;
+    }
+
+    span {
+        color: $color;
+    }
+
+    &:after {
+        content      : '';
+        position     : absolute;
+        left         : 0;
+        bottom       : 0;
+        width        : 100%;
+        border-bottom: .3rem groove $color;
+        @extend %elementTransition;
+    }
+
+    &:before {
+        content     : '';
+        position    : absolute;
+        top         : 0;
+        right       : 0;
+        width       : 25%;
+        height      : 50%;
+        border-top  : .3rem groove $color;
+        border-right: .3rem groove $color;
+        @extend %elementTransition;
+    }
+}
+
+@mixin dashCardHover ($color) {
+
+    background: $color;
+
+    h4 {
+        color: $accent;
+    }
+
+    h6 {
+        color: $accent;
+    }
+
+    span {
+        color: $accent;
+    }
+
+    &:before,
+    &:after {
+        width  : 0;
+        height : 0;
+        opacity: 0;
+    }
+}
+
+@mixin dashboard {
+    display       : flex;
+    flex-direction: column;
+    gap           : 2rem;
+
+    .summaries {
+        display              : grid;
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        gap                  : 1rem;
+
+        .summary {
+            background: $accent;
+            @extend %miniShadow;
+            @extend %elementTransition;
+            border-radius  : $radius;
+            padding        : 1rem;
+            cursor         : pointer;
+            position       : relative;
+            display        : flex;
+            flex-direction : column;
+            gap            : 1rem;
+            justify-content: center;
+            overflow       : hidden;
+            height         : max-content;
+
+            .body {
+                display        : flex;
+                justify-content: space-between;
+                align-items    : center;
+                font-size      : 3rem;
+
+                h6 {
+                    margin   : 0;
+                    font-size: 2.5rem;
+                }
+            }
+
+            &:nth-of-type(2) {
+                @include dashCard($primaryColor);
+
+                &:hover {
+                    @include dashCardHover($primaryColor);
+                }
+            }
+
+            &:nth-of-type(1) {
+                @include dashCard($error);
+
+                &:hover {
+                    @include dashCardHover($error);
+                }
+            }
+
+            &:nth-of-type(3) {
+                @include dashCard($success);
+
+                &:hover {
+                    @include dashCardHover($success);
+                }
+            }
+
+            h4 {
+                margin: 0;
+            }
+        }
+    }
+
+    .scores {
+
+        h2 {
+            color: $secondaryColor;
+        }
+
+        .score {
+            display       : flex;
+            flex-direction: column;
+            gap           : .3rem;
+            height        : 100%;
+
+            .score-list {
+                border-radius : $radius;
+                overflow      : hidden;
+                border        : .3rem groove $primaryColor;
+                display       : flex;
+                flex-direction: column;
+
+                h4 {
+                    cursor         : pointer;
+                    display        : flex;
+                    justify-content: space-between;
+                    padding        : .7rem;
+                    background     : $primaryColor;
+                    margin         : 0;
+                    color          : $accent;
+
+                    span {
+                        @extend %elementTransition;
+                    }
+
+                    &.open {
+                        span:not(.score-title) {
+                            transform: rotateX(-180deg);
+                        }
+                    }
+                }
+
+                .score-body {
+                    @extend %elementTransition;
+                    background     : $accent;
+                    display        : flex;
+                    flex-direction : column;
+                    align-items    : end;
+                    justify-content: center;
+                    gap            : 1rem;
+                    overflow       : hidden;
+
+                    &:not(.open) {
+                        height: 0;
+                    }
+
+                    &.open {
+                        padding   : 1rem;
+                        height    : 20rem;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                    }
+
+                    h4 {
+                        width        : max-content;
+                        border       : 1px solid $secondaryColor;
+                        border-radius: $radius;
+                        background   : none;
+                        color        : $primaryColor;
+                        cursor       : default;
+                    }
+
+                    .table-responsive {
+                        width: 100%;
+                    }
+
+                }
+            }
+        }
+    }
+
+}

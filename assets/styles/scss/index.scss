@@ -1,0 +1,16 @@
+@import './partials/autoload';
+@import './partials/sidebar';
+@import './partials/main';
+
+body {
+    display : flex;
+    overflow: hidden;
+}
+
+aside {
+    @include sidebar;
+}
+
+main {
+    @include main;
+}

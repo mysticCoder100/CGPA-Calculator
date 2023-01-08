@@ -1,0 +1,167 @@
+@mixin settings-link {
+    &::before {
+        width       : 100%;
+        border-color: $accent;
+    }
+
+}
+
+@mixin settings {
+    color         : $secondaryColor;
+    display       : flex;
+    flex-direction: column;
+    width         : 100%;
+    max-width     : 90rem;
+
+    @include responsiveMedia(m) {
+        flex-direction: row;
+    }
+
+    .head {
+        padding      : 1rem;
+        border-radius: $radius;
+        background   : $secondaryColor;
+        display      : flex;
+        align-items  : flex-end;
+        gap          : .5rem;
+        border       : .2rem dashed $background;
+
+
+        @include responsiveMedia(m) {
+            width         : 20rem;
+            flex-direction: column;
+        }
+
+        label {
+            border-radius: 50%;
+            overflow     : hidden;
+            position     : relative;
+
+            &::before {
+                content   : '';
+                position  : absolute;
+                top       : 0;
+                left      : 0;
+                width     : 100%;
+                height    : 100%;
+                background: #00000355;
+                z-index   : 100;
+                cursor    : pointer;
+                @extend %elementTransition;
+                font-size  : .8rem;
+                display    : grid;
+                place-items: center;
+                text-align : center;
+            }
+
+            &:hover {
+                &::before {
+                    content   : "click me to update me";
+                    background: transparent;
+                }
+            }
+
+            img {
+                width   : 5rem;
+                cursor  : pointer;
+                position: relative;
+            }
+        }
+
+        .settings-links {
+            width      : 100%;
+            overflow-x : auto;
+            overflow-y : hidden;
+            list-style : none;
+            padding    : .5rem 0;
+            display    : flex;
+            width      : 100%;
+            align-items: flex-end;
+            gap        : .5rem;
+
+            @include responsiveMedia(m) {
+                flex-direction: column;
+            }
+
+            li {
+                position: relative;
+
+                &::before {
+                    content : '';
+                    position: absolute;
+                    bottom  : 0;
+                    left    : 0;
+                    width   : 0;
+                    border  : 1px groove transparent;
+                    @extend %elementTransition;
+                }
+
+                &.active {
+                    @include settings-link();
+
+                    button {
+                        font-style : italic;
+                        font-weight: bold;
+                    }
+                }
+
+                &:hover {
+                    @include settings-link()
+                }
+
+                button {
+                    color: $accent;
+                    @extend %elementTransition;
+                }
+            }
+        }
+    }
+
+    .body {
+        display    : grid;
+        overflow-y : auto;
+        place-items: center;
+        height     : 100%;
+        width      : 100%;
+
+        @include responsiveMedia(m) {
+            padding: 1rem;
+        }
+
+        form {
+            display  : grid;
+            width    : 100%;
+            gap      : 1rem;
+            max-width: 30rem;
+
+            .my-input {
+                width        : 100%;
+                border-bottom: .1rem solid $primaryColor;
+                display      : flex;
+                align-items  : flex-end;
+
+                input {
+                    border       : none;
+                    background   : inherit;
+                    padding-left : 0;
+                    padding-right: 0;
+                    color        : $primaryColor;
+                }
+
+                span {
+                    cursor: pointer;
+                }
+            }
+
+            .my-button {
+                display       : flex;
+                flex-direction: column;
+
+                button {
+                    align-self: flex-end;
+
+                }
+            }
+        }
+    }
+}
