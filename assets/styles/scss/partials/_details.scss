@@ -1,0 +1,35 @@
+@mixin details {
+    color         : $primaryColor;
+    display       : flex;
+    flex-direction: column;
+    gap           : 1rem;
+
+    .records {
+        width  : 100%;
+        display: flex;
+
+        @include responsiveMedia(m) {
+            padding-left: 2rem;
+
+        }
+
+        .record {
+            display       : flex;
+            flex-direction: column;
+            gap           : 1rem;
+            width         : 100%;
+
+            @include responsiveMedia(m) {
+                padding-left: 2rem;
+
+                >div {
+                    padding-left: 2rem;
+                }
+            }
+
+
+            @include myAccordion;
+
+        }
+    }
+}

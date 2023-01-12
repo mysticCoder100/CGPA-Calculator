@@ -2,25 +2,35 @@ import { Dashboard } from "../pages/dashboard.js";
 import { Details } from "../pages/details.js";
 import { Settings } from "../pages/settings.js";
 import { Calculate } from "../pages/calculate.js";
-export function Router(page) {
+export async function Router(page) {
+  let user;
+  try {
+    user = await $.post(
+      "../../../src/request.php",
+      { getDetails: true },
+      null,
+      "json"
+    );
+  } catch (error) {
+    console.error(error);
+  }
   page = page || "dashboard";
-  console.log(page);
   $(`#${page}_link`).addClass("active");
   switch (page) {
     case "dashboard":
-      Dashboard({ page });
+      Dashboard({ page, user });
       break;
     case "calculate":
-      Calculate({ page });
+      Calculate({ page, user });
       break;
     case "details":
-      Details({ page });
+      Details({ page, user });
       break;
     case "settings":
-      Settings({ page });
+      Settings({ page, user });
       break;
     default:
-      Dashboard({ page });
+      Dashboard({ page, user });
       break;
   }
 }

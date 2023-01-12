@@ -17,14 +17,18 @@ $(".dropdown").on("click", function (e) {
 $(window).on("click", function (e) {
   $(".dropdown").removeClass("open");
   $(".user").removeClass("open");
-  if (e.target == $(".myModal")[0]) {
-    $(".myModal").removeClass("open");
-  }
+  $(".myModal").each(function (i, el) {
+    if (e.target == el) {
+      $(el).removeClass("open");
+    }
+  });
 });
 
-$(".myModalToggler").on("click", function () {
-  let target = $(this).data("target");
-  $(target).addClass("open");
+$(".myModalToggler").each(function (i, el) {
+  $(el).on("click", function () {
+    let target = $(this).data("target");
+    $(target).addClass("open");
+  });
 });
 
 $(".close-popup").on("click", function () {
@@ -54,7 +58,7 @@ $(".link").on("click", function () {
 
 $("#logout").on("click", () => {
   let data = { logout: true };
-  sessionStorage.clear();
+  sessionStorage.removeItem("page");
   $.post("../../src/request.php", data, null, "json").done((res) => {
     location.href = res.location;
   });

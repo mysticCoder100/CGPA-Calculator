@@ -61,7 +61,7 @@
 
     .summaries {
         display              : grid;
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
         gap                  : 1rem;
 
         .summary {
@@ -83,7 +83,9 @@
                 display        : flex;
                 justify-content: space-between;
                 align-items    : center;
+                width          : 100%;
                 font-size      : 3rem;
+                flex-wrap      : wrap;
 
                 h6 {
                     margin   : 0;
@@ -121,82 +123,6 @@
         }
     }
 
-    .scores {
-
-        h2 {
-            color: $secondaryColor;
-        }
-
-        .score {
-            display       : flex;
-            flex-direction: column;
-            gap           : .3rem;
-            height        : 100%;
-
-            .score-list {
-                border-radius : $radius;
-                overflow      : hidden;
-                border        : .3rem groove $primaryColor;
-                display       : flex;
-                flex-direction: column;
-
-                h4 {
-                    cursor         : pointer;
-                    display        : flex;
-                    justify-content: space-between;
-                    padding        : .7rem;
-                    background     : $primaryColor;
-                    margin         : 0;
-                    color          : $accent;
-
-                    span {
-                        @extend %elementTransition;
-                    }
-
-                    &.open {
-                        span:not(.score-title) {
-                            transform: rotateX(-180deg);
-                        }
-                    }
-                }
-
-                .score-body {
-                    @extend %elementTransition;
-                    background     : $accent;
-                    display        : flex;
-                    flex-direction : column;
-                    align-items    : end;
-                    justify-content: center;
-                    gap            : 1rem;
-                    overflow       : hidden;
-
-                    &:not(.open) {
-                        height: 0;
-                    }
-
-                    &.open {
-                        padding   : 1rem;
-                        height    : 20rem;
-                        overflow-x: hidden;
-                        overflow-y: auto;
-                    }
-
-                    h4 {
-                        width        : max-content;
-                        border       : 1px solid $secondaryColor;
-                        border-radius: $radius;
-                        background   : none;
-                        color        : $primaryColor;
-                        cursor       : default;
-                    }
-
-                    .table-responsive {
-                        width: 100%;
-                    }
-
-                }
-            }
-        }
-    }
+    @include myAccordion;
 
 }

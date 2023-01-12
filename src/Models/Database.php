@@ -53,6 +53,27 @@ class Database
         }
     }
 
+    public function update($data, $id)
+    {
+        $preparedData = $this->prepared($data);
+        $column = array_keys($data);
+        $preparedColumn = array_keys($preparedData);
+        $setField = [];
+        foreach ($column as $key => $value) {
+            $val = "$value=$preparedColumn[$key]";
+            array_push($setField, $val);
+        }
+        $stringnifySetField = implode(",", $setField);
+        $query = "UPDATE $this->table SET $stringnifySetField,updated_at = CURRENT_TIMESTAMP WHERE id = '$id'";
+        try {
+            $stmt = $this->connection->prepare($query);
+            $result = $stmt->execute($preparedData);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error During Updating: {$e->getMessage()}";
+        }
+    }
+
     public function fetch($data)
     {
         $preparedData = $this->prepared($data);

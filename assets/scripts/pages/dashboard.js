@@ -1,7 +1,7 @@
 import { Preloading } from "../actions/Preloading.js";
 import { ResultAccordion } from "../components/ResultsAccordion.js";
 
-export function Dashboard({ page }) {
+export function Dashboard({ page, user }) {
   page = page || "dashboard";
   let section = $(`
         <section id="dashboard">

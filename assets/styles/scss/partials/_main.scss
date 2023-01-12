@@ -1,5 +1,7 @@
 @import './dashboard';
 @import './settings';
+@import './calculate';
+@import "./details";
 
 @mixin main {
     padding       : 0 !important;
@@ -192,7 +194,8 @@
 
         }
 
-        >section {
+        >section,
+        >form {
             width : 100%;
             height: 100%;
         }
@@ -203,6 +206,14 @@
 
         #settings {
             @include settings;
+        }
+
+        #calculate {
+            @include calculate;
+        }
+
+        #details {
+            @include details;
         }
     }
 

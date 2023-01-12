@@ -1,7 +1,11 @@
 @mixin settings-link {
     &::before {
         width       : 100%;
-        border-color: $accent;
+        border-color: $primaryColor;
+
+        @include responsiveMedia(l) {
+            border-color: $accent;
+        }
     }
 
 }
@@ -13,21 +17,20 @@
     width         : 100%;
     max-width     : 90rem;
 
-    @include responsiveMedia(m) {
+    @include responsiveMedia(l) {
         flex-direction: row;
     }
 
     .head {
         padding      : 1rem;
         border-radius: $radius;
-        background   : $secondaryColor;
         display      : flex;
         align-items  : flex-end;
         gap          : .5rem;
-        border       : .2rem dashed $background;
 
 
-        @include responsiveMedia(m) {
+        @include responsiveMedia(l) {
+            background    : $secondaryColor;
             width         : 20rem;
             flex-direction: column;
         }
@@ -57,6 +60,7 @@
             &:hover {
                 &::before {
                     content   : "click me to update me";
+                    color     : black;
                     background: transparent;
                 }
             }
@@ -79,7 +83,7 @@
             align-items: flex-end;
             gap        : .5rem;
 
-            @include responsiveMedia(m) {
+            @include responsiveMedia(l) {
                 flex-direction: column;
             }
 
@@ -110,8 +114,12 @@
                 }
 
                 button {
-                    color: $accent;
                     @extend %elementTransition;
+                    color: $primaryColor;
+
+                    @include responsiveMedia(l) {
+                        color: $accent;
+                    }
                 }
             }
         }
@@ -148,9 +156,14 @@
                     color        : $primaryColor;
                 }
 
+
                 span {
                     cursor: pointer;
                 }
+            }
+
+            p {
+                margin: 0 !important;
             }
 
             .my-button {
