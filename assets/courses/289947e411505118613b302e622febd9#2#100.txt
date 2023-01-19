@@ -1,0 +1,4 @@
+code.GNS 102,score.68,grade.B,unit.3
+code.SEN 102,score.78,grade.A,unit.2
+code.CSC 102,score.65,grade.B,unit.3
+code.GNS 106,score.57,grade.B,unit.3

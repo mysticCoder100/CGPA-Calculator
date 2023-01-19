@@ -1,12 +1,16 @@
-export function ResultAccordion() {
-  let accordion = $(`
+export function ResultAccordion({ title, tcp, tlu, gpa, courses }) {
+	let accordion = $(`
         <div class="score-list">
             <h4 class="score-list-header">
-                <span class="score-title">Title</span>
+                <span class="score-title">${title}</span>
                 <span class=""> <i class="fas fa-angle-down"></i> </span>
             </h4>
             <div class="score-body ">
-               <h4>GPA: 3.00</h4>
+                <div class="score-tab">
+                    <h4>TCP: ${tcp}</h4>
+                    <h4>TLU: ${tlu}</h4>
+                    <h4>GPA: ${gpa}</h4>
+                </div>
                <div class="table-responsive">
                 <table class="table table-striped
                 table-hover	
@@ -17,35 +21,23 @@ export function ResultAccordion() {
                         <tr>
                             <th>S/N</th>
                             <th>Course Code</th>
-                            <th>Course Title</th>
                             <th>Course Unit</th>
                             <th>Score</th>
                             <th>Grade</th>
-                            <th>TCP</th>
-                            <th>TLU</th>
                         </tr>
                         </thead>
                         <tbody class="table-group-divider">
-                            <tr class="table-primary" >
-                                <td scope="row">Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                </tr>
-                            <tr class="table-primary">
-                                <td scope="row">Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                                <td>Item</td>
-                            </tr>
+                           ${courses
+								.map((course, i) => {
+									return `<tr class="table-primary" >
+                                    <td scope="row">${++i}</td>
+                                    <td>${course.code}</td>
+                                    <td>${course.unit}</td>
+                                    <td>${course.score}</td>
+                                    <td>${course.grade}</td>
+                                </tr>`;
+								})
+								.join("")}
                         </tbody>
                 </table>
                </div>
@@ -53,15 +45,18 @@ export function ResultAccordion() {
             </div>
         </div>
     `);
-  accordion.find(".score-list-header").on("click", function () {
-    let siblings = $(this).parents(".score-list").siblings();
-    $(siblings).each((i, el) => {
-      let body = $(el).find(".score-body");
-      body.removeClass("open");
-      $(el).find(".score-list-header").removeClass("open");
-    });
-    accordion.find(".score-body").toggleClass(`open`);
-    $(this).toggleClass("open");
-  });
-  return accordion;
+	accordion.find(".score-list-header").on("click", function () {
+		let siblings = $(".score-list");
+		let me = this;
+		$(siblings).each(function (i, el) {
+			if ($(el)[0] == $(me).parents(".score-list")[0]) return;
+			if ($(el) == $(me).parents(".score-list")) return;
+			let body = $(el).find(".score-body");
+			body.removeClass("open");
+			$(el).find(".score-list-header").removeClass("open");
+		});
+		accordion.find(".score-body").toggleClass(`open`);
+		$(me).toggleClass("open");
+	});
+	return accordion;
 }

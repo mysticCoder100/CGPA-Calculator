@@ -13,6 +13,7 @@
     @extend %elementTransition;
 
 
+
     header {
         background     : $accent;
         display        : flex;
@@ -22,6 +23,7 @@
         color          : $primaryColor;
         position       : relative;
         @extend %shadow;
+        gap: 1rem;
 
         .right {
             display    : flex;
@@ -147,6 +149,10 @@
                 @extend %elementTransition;
             }
 
+            p {
+                margin: 0 !important;
+            }
+
             &.open {
                 span {
                     transform: rotateX(180deg);
@@ -215,6 +221,30 @@
         #details {
             @include details;
         }
+
+        .completeProfile {
+            width      : 100%;
+            height     : 100%;
+            display    : grid;
+            place-items: center;
+
+            &__info {
+                display       : flex;
+                flex-direction: column;
+                align-items   : center;
+
+                h4 {
+                    color: $primaryColor;
+                }
+
+                h6 {
+                    span {
+                        color: $error;
+                    }
+                }
+            }
+        }
+
     }
 
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-require_once __DIR__ . './src/request.php';
+require_once __DIR__ . '/./src/request.php';
 if (isset($_SESSION['user'])) {
     header("Location: /");
 }
@@ -55,14 +55,17 @@ if (isset($_SESSION['user'])) {
                         <div class="tail">
                             <div class="short-links">
                                 <a href="register.php"> Don't have an account?</a>
-                                <a href="#"> Forgot Password?</a>
+                                <a href="./forget_password.php"> Forgot Password?</a>
                             </div>
-                            <button class="btn btn-primary" name="login" type="submit">Login</button>
+                            <button class="btn btn-primary" name="login" type="submit">
+                                Login
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
                         </div>
                     </div>
 
                     <footer>
-                        <p>Developed by Abdul-Azeem <a href="#"> <i class="fab fa-whatsapp" aria-hidden="true"></i> </a></p>
+                        <p>Developed by Abdul-Azeem <a href=""> <i class="fab fa-whatsapp" aria-hidden="true"></i> </a></p>
                     </footer>
                 </form>
 

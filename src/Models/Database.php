@@ -3,6 +3,7 @@
 class Database
 {
     protected $table = "";
+    protected $connection = "";
     public function __construct()
     {
         $this->connection = $this->connect();
@@ -84,6 +85,21 @@ class Database
             $stmt = $this->connection->prepare($query);
             $stmt->execute($preparedData);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error During Fetching: {$e->getMessage()}";
+        }
+    }
+    public function fetchAll($data)
+    {
+        $preparedData = $this->prepared($data);
+        $column = implode(',', array_keys($data));
+        $preparedColumn = implode(',', array_keys($preparedData));
+        $query = "SELECT * FROM $this->table WHERE  $column = $preparedColumn";
+        try {
+            $stmt = $this->connection->prepare($query);
+            $stmt->execute($preparedData);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
             echo "Error During Fetching: {$e->getMessage()}";

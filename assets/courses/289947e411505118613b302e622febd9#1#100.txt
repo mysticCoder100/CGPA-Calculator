@@ -1,0 +1,5 @@
+code.SEN 144,score.78,grade.A,unit.2
+code.CSC 101,score.67,grade.B,unit.3
+code.GNS 101,score.80,grade.A,unit.3
+code.GNS 103,score.69,grade.B,unit.1
+code.MEE 101,score.75,grade.A,unit.3

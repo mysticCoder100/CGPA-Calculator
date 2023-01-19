@@ -46,7 +46,7 @@ class UserController
 
         $validation = $this->validator->make($fields, [
             'level' => 'required|numeric|min:3',
-            'course_duration' => 'required|numeric|min:3',
+            'course_duration' => 'required|numeric',
             'semester' => 'required|numeric',
         ]);
 

@@ -1,0 +1,181 @@
+%form {
+    display    : grid;
+    height     : 100%;
+    width      : 100%;
+    place-items: center;
+    background : linear-gradient(to top left, $primaryColor, lighten($primaryColor, 10%) 50%, $primaryColor, lighten($primaryColor, 10%));
+    overflow   : hidden;
+
+    footer {
+        p {
+            color: $background;
+        }
+    }
+
+    form {
+        max-width            : 100%;
+        min-width            : auto;
+        min-height           : auto;
+        max-height           : 100%;
+        display              : grid;
+        grid-template-columns: 1fr;
+        gap                  : 1.4rem;
+        padding              : 1rem 0;
+        overflow-y           : auto;
+        overflow-x           : hidden;
+        background           : linear-gradient(to left, #00000222, lighten($primaryColor, 10%), #00000222);
+        padding              : 1rem;
+        border-radius        : .5rem;
+        @extend %shadow;
+
+
+
+        img {
+            width       : 8rem;
+            justify-self: center;
+        }
+
+        .fields {
+            width  : 100%;
+            display: grid;
+            gap    : 1.5rem;
+
+            @include responsiveMedia(s) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            label {
+                color: $background;
+            }
+
+            .input-container {
+                display       : flex;
+                flex-direction: column;
+                gap           : .5rem;
+
+                p {
+                    margin: 0 !important;
+                }
+
+                .response {
+                    &__error {
+                        color: $error;
+                    }
+
+                    &__success {
+                        color: $success;
+                    }
+                }
+
+                .input-field {
+                    border       : 1px solid darken($primaryColor, 10%);
+                    border-radius: $radius;
+                    overflow     : hidden;
+                    display      : flex;
+                    align-items  : center;
+
+                    &.error {
+                        border: 1px solid $error;
+
+                        input {
+                            &::placeholder {
+                                color: $error;
+                            }
+                        }
+                    }
+
+                    span {
+                        color: darken($primaryColor, 10%);
+                        @extend %formFontSize;
+                        cursor: pointer;
+                        @extend %elementTransition;
+
+                        &:hover {
+                            color: darken($color: $primaryColor, $amount: 15%);
+                        }
+                    }
+                }
+
+                input {
+                    border: none;
+                    @extend %formFontSize;
+                    color     : $primaryColor;
+                    background: none;
+                    color     : $accent;
+
+                    &::placeholder {
+                        color: $accent;
+                    }
+                }
+            }
+
+            .input-form {
+                display    : flex;
+                align-items: center;
+                gap        : 1rem;
+
+                label {
+                    @extend %formFontSize;
+                }
+
+                .btn-group {
+                    label {
+                        color: $accent;
+                        @extend %elementTransition;
+
+                        &:hover {
+                            color     : $accent;
+                            background: darken($primaryColor, 15%);
+                        }
+                    }
+
+                    .btn-check:checked+.btn {
+                        color     : $accent;
+                        background: darken($primaryColor, 10%)
+                    }
+                }
+            }
+
+
+
+
+
+
+            .tail {
+                display       : flex;
+                flex-direction: column;
+                gap           : .3rem;
+
+                @include responsiveMedia(s) {
+                    grid-column: 1 /span 2;
+                }
+
+                .short-links {
+                    display        : flex;
+                    justify-content: flex-end;
+
+                    a {
+                        font-size: .7rem;
+                        color    : darken($accent, 10%);
+                        @extend %elementTransition;
+
+                        &:hover {
+                            color: $background;
+                        }
+                    }
+                }
+
+                button {
+                    background: darken($primaryColor, 10%);
+                    @extend %elementTransition;
+                    @extend %formFontSize;
+
+                    &:hover {
+                        background: darken($color: $primaryColor, $amount: 15%);
+                    }
+                }
+            }
+        }
+    }
+
+}
