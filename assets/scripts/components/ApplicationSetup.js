@@ -44,7 +44,7 @@ export function ApplicationSetup(prop) {
 			for (let key in user) {
 				prop[key] = user[key];
 			}
-			submitButton.prop({ disabled: false }).text(text);
+			submitButton.text(text);
 			container.prepend(response({ ...res, className: "success" }));
 			container.find("input").prop({ readonly: true });
 		} catch (error) {
@@ -83,7 +83,14 @@ export function ApplicationSetup(prop) {
 				}"  ${prop.course_duration && "readonly"}/>
             </div>
             <div class="my-button">
-                <button type="submit" class="btn btn-primary "> Update</button>
+                <button type="submit"  class="btn btn-primary" ${
+					prop.course_duration &&
+					prop.level &&
+					prop.semester &&
+					"disabled"
+				}> 
+					Update
+				</button>
             </div>
         </form>
     `);

@@ -6,6 +6,7 @@ use Rakit\Validation\validator;
 
 class UserController
 {
+    protected $validator;
     public function __construct()
     {
         $this->validator = new Validator();

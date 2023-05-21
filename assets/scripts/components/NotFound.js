@@ -3,7 +3,6 @@ export function NotFound() {
         <div class="completeProfile">
             <div class="completeProfile__info">
                 <h4> No Record Found !!! </h4>
-                <h6>You have no record presently</h6>
             </div>
         </div>
     `);

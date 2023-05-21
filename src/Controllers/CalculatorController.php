@@ -8,6 +8,8 @@ require_once __DIR__ . "/./../library/Calculator.php";
 class CalculatorController
 {
 
+    protected $props;
+    protected $courses;
     public function __construct($props)
     {
         $this->props = $props;

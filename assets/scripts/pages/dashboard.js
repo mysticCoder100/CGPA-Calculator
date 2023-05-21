@@ -35,9 +35,10 @@ export async function Dashboard({ page, user }) {
 		let totalSemester = course_duration * 2;
 		let spentSemesterF =
 			level == 100
-				? level[0] * semester
-				: level[0] * semester + Number([level[0] - 1]);
-		let spentSemesterS = level[0] * semester;
+				? String(level).split("")[0] * semester
+				: String(level).split("")[0] * semester +
+				  Number([String(level).split("")[0] - 1]);
+		let spentSemesterS = String(level).split("")[0] * semester;
 		let remainingSemester =
 			semester == 1
 				? totalSemester - spentSemesterF
@@ -95,6 +96,6 @@ export async function Dashboard({ page, user }) {
 		});
 		$("#main").append(section);
 	} catch (error) {
-		console.error(error.responseText);
+		console.error(error);
 	}
 }
